@@ -4,26 +4,20 @@ const uuid = require('uuid');
 const fs = require('fs');
 const routes = express.Router();
 
-const uploadFile = (res, file, filename) => {
-  file.mv(`./public/${filename}`, function (err) {
-    if (err)
-      return res.status(500).send(err);
-    res.send(`Your FileId:<h3>${filename}</h3> 
-    \n To access in future goto: http://localhost:3000/${filename}`);
-  });
-};
-
+const uploadFile = require('./../controller/fileUploader');
 const authenticate = require('./../middleware/authenticate.js');
 
+/**
+ * Authenticates user
+ */
 routes.use(authenticate);
+
+routes.get('/download/:id', (req, res) => {
+  res.download(`./public/${req.params.id}`);
+});
 
 routes.get('/upload', (req, res) => {
   res.sendFile('upload.html', { root: path.join(__dirname, '../views/') })
-});
-
-// To download files directly from browser
-routes.get('/download/:id', (req, res) => {
-  res.download(`./public/${req.params.id}`);
 });
 
 routes.post('/upload', function (req, res) {
@@ -40,13 +34,18 @@ routes.get('/update', (req, res) => {
   res.sendFile('update.html', { root: path.join(__dirname, '../views/') });
 });
 
+/**
+ * HTML forms not allows to set mehthod=PUT
+ */
 routes.post('/update', (req, res) => {
   console.log(req.files);
   uploadFile(res, req.files.updatedFile, req.body.filename);
 });
 
-// On browser , can't use DELETE OR PUT  
-// Directly deletes from browser side.
+/**
+ * HTML forms not allows to set mehthod=PUT
+ * Directly deletes from browser side.
+ */
 routes.get('/delete/:id', (req, res) => {
 
   try {

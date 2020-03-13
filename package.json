@@ -2,7 +2,7 @@
   "name": "node_assignment",
   "version": "1.0.0",
   "description": "Uploading files on public folder, asscessing it and performing CRUD operation with sessions.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

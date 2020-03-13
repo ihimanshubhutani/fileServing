@@ -65,6 +65,10 @@ app.get('/upload', authenticate, (req, res) => {
   res.sendFile('upload.html', { root: path.join(__dirname, '../views/') })
 });
 
+app.get('/download/:id', authenticate, (req, res) => {
+  res.download(`./public/${req.params.id}`);
+});
+
 app.post('/upload', function (req, res) {
 
   if (!req.files) {

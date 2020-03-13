@@ -5,7 +5,6 @@ const config = require('config');
  *   only if user is logged in.
  */
 const authenticate = (req, res, next) => {
-
   if (!config.REGISTERED_SESSION[req.sessionID]) {
     return res.redirect(401, '/login');
   }

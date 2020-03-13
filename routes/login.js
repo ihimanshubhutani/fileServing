@@ -13,7 +13,7 @@ routes.post('/', (req, res) => {
     config.REGISTERED_SESSION[req.sessionID] = true;
     return res.redirect('/');
   }
-  res.send({ message: 'Invalid Credentials' });
+  res.status(400).send({ message: 'Invalid Credentials' });
 });
 
 module.exports = routes;

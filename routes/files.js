@@ -27,9 +27,8 @@ routes.get('/download/:id', (req, res) => {
 });
 
 routes.post('/upload', function (req, res) {
-
   if (!req.files) {
-    return res.status(400).send('No files were uploaded.');
+    return res.status(400).send({ message: 'No files were uploaded' });
   }
 
   const file = req.files.uploadedFile;
@@ -42,6 +41,7 @@ routes.get('/update', (req, res) => {
 });
 
 routes.post('/update', (req, res) => {
+  console.log(req.files);
   uploadFile(res, req.files.updatedFile, req.body.filename);
 });
 
@@ -53,7 +53,7 @@ routes.get('/delete/:id', (req, res) => {
     fs.unlinkSync(`./ public / ${req.params.id}`);
     res.send({ message: "Removed Succesfully" });
   } catch (err) {
-    res.send({ message: "File Cannot be deleted", err })
+    res.status(404).send({ message: "File Cannot be deleted", err })
   }
 });
 

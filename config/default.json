@@ -3,5 +3,6 @@
     "ID": "abc",
     "PASSWORD": "abc123"
   },
-  "SECRET": "101458794DSA"
+  "SECRET": "101458794DSA",
+  "REGISTERED_SESSION": {}
 }

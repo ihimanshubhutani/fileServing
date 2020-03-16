@@ -1,0 +1,19 @@
+{
+  "name": "node_assignment",
+  "version": "1.0.0",
+  "description": "Uploading files on public folder, asscessing it and performing CRUD operation with sessions.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "express-session": "^1.17.0",
+    "uuid": "^7.0.2"
+  }
+}

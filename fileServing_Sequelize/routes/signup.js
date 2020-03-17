@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const insertUser = require('../controller/insertUsers');
+const { insertUser } = require('../controller/user-dataHandler');
 const validator = require('../middleware/validator');
 const cryptoPasswordParser = require('../middleware/cryptoPassword');
 

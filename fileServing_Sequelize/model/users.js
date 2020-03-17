@@ -11,6 +11,7 @@ User.init({
   username: {
     type: Sequelize.STRING,
     allowNull: false,
+    primaryKey: true
   },
   password: {
     type: Sequelize.STRING,
@@ -18,7 +19,7 @@ User.init({
   }
 }, {
   sequelize,
-  modelName: 'usersDB',
+  modelName: 'users',
   timestamps: false,
 });
 

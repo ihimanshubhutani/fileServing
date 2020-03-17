@@ -1,4 +1,4 @@
-const crypto = require('crypto').createHash('md5');
+const crypto = require('crypto');
 
 /**
  * If body has any password field, populates it with its cryptographic hash 
@@ -6,7 +6,8 @@ const crypto = require('crypto').createHash('md5');
 module.exports = (req, res, next) => {
   const password = req.body.password;
   if (password) {
-    req.body.password = crypto.update(password).digest('hex');
+    const cryptoHash = crypto.createHash('sha256');
+    req.body.password = cryptoHash.update(password).digest('hex');
   }
 
   next();

@@ -3,16 +3,18 @@ const path = require('path');
 const uuid = require('uuid');
 const fs = require('fs');
 const routes = express.Router();
-
 const uploadFile = require('../controller/fileUploader');
 const authenticate = require('../middleware/authenticate.js');
+const checkAccessAllowed = require('../middleware/checkAccesPrivilages');
+const { deleteFilePath } = require('../controller/files-dataHandler');
 
 /**
  * Authenticates user
  */
 routes.use(authenticate);
 
-routes.get('/download/:id', (req, res) => {
+routes.get('/:user/:id', checkAccessAllowed, (req, res) => {
+
   res.download(`./public/${req.params.id}`);
 });
 
@@ -27,7 +29,8 @@ routes.post('/upload', function (req, res) {
 
   const file = req.files.uploadedFile;
   const filename = `${uuid.v4()}${path.extname(file.name)}`;
-  uploadFile(res, file, filename);
+
+  uploadFile(req, res, file, filename);
 });
 
 routes.get('/update', (req, res) => {
@@ -39,18 +42,20 @@ routes.get('/update', (req, res) => {
  */
 routes.post('/update', (req, res) => {
   console.log(req.files);
-  uploadFile(res, req.files.updatedFile, req.body.filename);
+  uploadFile(req, res, req.files.updatedFile, req.body.filename);
 });
 
 /**
  * HTML forms not allows to set mehthod=PUT
  * Directly deletes from browser side.
  */
-routes.get('/delete/:id', (req, res) => {
+routes.get('/:user/delete/:id', (req, res) => {
 
   try {
     fs.unlinkSync(`./ public / ${req.params.id}`);
     res.send({ message: "Removed Succesfully" });
+    deleteFilePath(`./public/${req.params.id}`);
+
   } catch (err) {
     res.status(404).send({ message: "File Cannot be deleted", err })
   }

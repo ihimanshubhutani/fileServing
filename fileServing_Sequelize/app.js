@@ -4,6 +4,10 @@ const fileUpload = require('express-fileupload');
 const session = require('express-session')
 const config = require('config');
 const bodyParser = require('body-parser');
+const filesRoute = require('./routes/files');
+const loginRoute = require('./routes/login');
+const signupRoute = require('./routes/signup');
+const index = require('./routes/index');
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,18 +18,11 @@ app.use(session({
 
 app.use(fileUpload());
 
-/**  *********CREDENTIALS ********* 
- *    userid - abc
- *    password - abc123
- */
-
-/**
- * Displays file on browser
- */
 app.use('/files', express.static('./public'));
 
-app.use('/files', require('./routes/files'));
-app.use('/login', require('./routes/login'));
-app.use('/', require('./routes/index'));
+app.use('/files', filesRoute);
+app.use('/login', loginRoute);
+app.use('/signup', signupRoute);
+app.use('/', index);
 
 app.listen(3000, console.log('Running Server'));

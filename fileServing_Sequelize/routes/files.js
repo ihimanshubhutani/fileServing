@@ -4,8 +4,8 @@ const uuid = require('uuid');
 const fs = require('fs');
 const routes = express.Router();
 
-const uploadFile = require('./../controller/fileUploader');
-const authenticate = require('./../middleware/authenticate.js');
+const uploadFile = require('../controller/fileUploader');
+const authenticate = require('../middleware/authenticate.js');
 
 /**
  * Authenticates user

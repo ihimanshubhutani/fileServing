@@ -59,4 +59,4 @@ Download particular file
 
 To Just view file on server
 
-   http://localhost:3000/files/:file_id
+    http://localhost:3000/files/:file_id

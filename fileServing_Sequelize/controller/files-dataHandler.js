@@ -1,4 +1,4 @@
-const filePaths = require('./../model/filePaths');
+const db = require('../models');
 
 /**
  * Saves file path into filePaths database.
@@ -6,16 +6,16 @@ const filePaths = require('./../model/filePaths');
  * @param   {string} username
  * @returns {void} 
  */
-const saveFilePath = (path, username) => filePaths.create({
-  filePath: path,
-  username
+const saveFilePath = (path, username) => db.File_DB.create({
+  path,
+  user_username: username
 });
 
 /**
  * Deletes file path from filePaths database.
  * @param {*} path 
  */
-const deleteFilePath = path => filePaths.destroy({
+const deleteFilePath = path => db.File_DB.destroy({
   where: {
     filePath: path
   }
@@ -29,12 +29,12 @@ const deleteFilePath = path => filePaths.destroy({
  */
 const verifyUserWithFile = (username, fileId) => new Promise(resolve => filePaths.findOne({
   where: {
-    username,
+    user_username: username,
     filePath: `./public/${fileId}`
   }
 }).then(result => {
   console.log(result);
-  resolve(result)
+  resolve(result);
 }));
 
 /**
@@ -43,11 +43,11 @@ const verifyUserWithFile = (username, fileId) => new Promise(resolve => filePath
  * @param {string} res 
  */
 const showUserFiles = (username, res) => {
-  filePaths.findAll({
+  db.File_DB.findAll({
     raw: true,
-    attributes: { exclude: ['username'] },
+    attributes: { exclude: ['createdAt'] },
     where: {
-      username
+      user_username: username
     }
   }).then((result) => {
     console.log(result);
@@ -55,7 +55,9 @@ const showUserFiles = (username, res) => {
       return res.send({ message: "No files present with this username" });
     }
     res.send(result);
-  });
+  }).catch((err) => {
+    res.send({ err });
+  });;
 }
 
 module.exports = { saveFilePath, deleteFilePath, verifyUserWithFile, showUserFiles };

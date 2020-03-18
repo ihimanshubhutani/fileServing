@@ -1,4 +1,4 @@
-const User = require('./../model/users');
+const db = require('../models');
 
 /**
  * Insert Username and hashed password in database.
@@ -6,7 +6,7 @@ const User = require('./../model/users');
  * @param   {string} password 
  * @returns {void}
  */
-const insertUser = (username, password) => User.create(
+const insertUser = (username, password) => db.User.create(
   { username, password }
 );
 
@@ -17,7 +17,12 @@ const insertUser = (username, password) => User.create(
  * @returns {void}
  */
 const authenticateUser = (username, password) => new Promise((resolve) =>
-  User.findOne({ where: { username, password } })
+  db.User.findOne(
+
+    {
+      attributes: ['username'],
+      where: { username, password }
+    })
     .then((result) => resolve(result)));
 
 module.exports = { insertUser, authenticateUser };

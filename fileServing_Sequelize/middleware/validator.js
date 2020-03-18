@@ -1,4 +1,4 @@
-const User = require('./../model/users');
+const db = require('../models');
 const config = require('config');
 
 /**
@@ -17,7 +17,7 @@ const isValidPassword = password => {
  * @returns {promise}
  */
 const isAlreadyExists = username => new Promise((resolve) =>
-  User.findOne({ where: { username } })
+  db.User.findOne({ where: { username } })
     .then((result) => resolve(result)));
 
 module.exports = (req, res, next) => {

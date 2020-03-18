@@ -26,6 +26,9 @@ This API hosts files on server , on uploading files it give return unique token 
         
         $ npm install 
 
+### Start project 
+
+      $ npm install
 ### Routes
 It requires user need to be logged in, if user is not registered he can register by following below link:
 
@@ -49,4 +52,8 @@ Show files
 
 Download particular file
 
-    http://localhost:3000/files/download/:id
+    http://localhost:3000/files/download/:file_id
+
+To Just view file on server
+
+   http://localhost:3000/files/:file_id

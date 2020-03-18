@@ -15,6 +15,6 @@ filePaths.init({
 
 User.hasMany(filePaths, { foreignKey: 'username' });
 
-sequelize.sync({ force: true }).then(console.log('filePath synced'));
+sequelize.sync().then(console.log('filePath Model Connected'));
 
 module.exports = filePaths;

@@ -23,6 +23,6 @@ User.init({
   timestamps: false,
 });
 
-User.sync().then(console.log('Sync Done'));
+User.sync().then(console.log('Users table Connected'));
 
 module.exports = User;

@@ -1,13 +1,14 @@
-const express = require('express');
-const app = express();
-const fileUpload = require('express-fileupload');
-const session = require('express-session')
 const config = require('config');
 const bodyParser = require('body-parser');
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const session = require('express-session');
 const filesRoute = require('./routes/files');
+const index = require('./routes/index');
 const loginRoute = require('./routes/login');
 const signupRoute = require('./routes/signup');
-const index = require('./routes/index');
+
+const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));

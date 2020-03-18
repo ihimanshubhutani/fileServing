@@ -1,25 +1,31 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
-const fs = require('fs');
-const routes = express.Router();
+
 const uploadFile = require('../controller/fileUploader');
+const { deleteFilePath, showUserFiles } = require('../controller/files-dataHandler');
 const authenticate = require('../middleware/authenticate.js');
 const checkAccessAllowed = require('../middleware/checkAccesPrivilages');
-const { deleteFilePath } = require('../controller/files-dataHandler');
+
+const routes = express.Router();
 
 /**
- * Authenticates user
+ * Authenticates user, if its session is already availabe or not.
  */
 routes.use(authenticate);
 
-routes.get('/:user/:id', checkAccessAllowed, (req, res) => {
-
-  res.download(`./public/${req.params.id}`);
+routes.get('/', (req, res) => {
+  showUserFiles(req.session.username, res);
 });
 
 routes.get('/upload', (req, res) => {
   res.sendFile('upload.html', { root: path.join(__dirname, '../views/') })
+});
+
+routes.get('/download/:id', checkAccessAllowed, (req, res) => {
+  console.log('download');
+  res.download(`./public/${req.params.id}`);
 });
 
 routes.post('/upload', function (req, res) {
@@ -38,7 +44,8 @@ routes.get('/update', (req, res) => {
 });
 
 /**
- * HTML forms not allows to set mehthod=PUT
+ * HTML forms not allows to set mehthod = PUT,
+ * Directly updates from browser side.
  */
 routes.post('/update', (req, res) => {
   console.log(req.files);
@@ -46,13 +53,13 @@ routes.post('/update', (req, res) => {
 });
 
 /**
- * HTML forms not allows to set mehthod=PUT
+ * HTML forms not allows to set mehthod = DELETE
  * Directly deletes from browser side.
  */
-routes.get('/:user/delete/:id', (req, res) => {
+routes.get('/delete/:id', checkAccessAllowed, (req, res) => {
 
   try {
-    fs.unlinkSync(`./ public / ${req.params.id}`);
+    fs.unlinkSync(`./public/${req.params.id}`);
     res.send({ message: "Removed Succesfully" });
     deleteFilePath(`./public/${req.params.id}`);
 

@@ -5,7 +5,7 @@ const path = require('path');
 const authenticate = require('../middleware/authenticate.js');
 routes.use(authenticate);
 
-routes.get('/', authenticate, (req, res) => res.sendFile('index.html',
+routes.get('/', (req, res) => res.sendFile('index.html',
   { root: path.join(__dirname, '../views/') })
 );
 

@@ -27,13 +27,10 @@ module.exports = (req, res, next) => {
 
   isAlreadyExists(req.body.username).
     then((response) => {
-
       if (response) {
         return res.status(401).send({ message: config.MESSAGE.USER_EXISTS });
       }
 
       next();
     });
-
-
 }

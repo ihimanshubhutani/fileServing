@@ -23,8 +23,8 @@ routes.post('/', cryptoPasswordParser, (req, res) => {
       req.session.password = req.body.password;
 
       /**
-       * if user ticked 'Remember me' checkbox his session 
-       * will be mainted even after browser is closed.
+       * if user ticked 'Remember me' checkbox, his session 
+       * will be mainted even after browser is closed (for 24 hours from login)
        */
       if (req.body.checkbox) {
         req.session.cookie.maxAge = 24 * 60 * 60 * 1000

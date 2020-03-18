@@ -28,7 +28,10 @@ This API hosts files on server , on uploading files it give return unique token 
 
 ### Start project 
 
-      $ npm install
+      $ npm start
+
+      $ npx sequelize db:migrate
+
 ### Routes
 It requires user need to be logged in, if user is not registered he can register by following below link:
 

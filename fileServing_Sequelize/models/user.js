@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     attributes: { exclude: ['id'] },
     timestamps: false
   });
+
   User.associate = function (models) {
     User.hasMany(models.File_DB, {
       foreignKey: 'user_username'
